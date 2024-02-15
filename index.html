@@ -4,43 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot de Flowise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+        #login-container {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #login-container h2 {
+            margin-top: 0;
+            font-size: 24px;
+            color: #333;
+        }
+        #login-form {
+            display: flex;
+            flex-direction: column;
+        }
+        #login-form input {
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+        #login-form button {
+            padding: 10px 20px;
+            background-color: #3B81F6;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        #login-form button:hover {
+            background-color: #2e66d6;
+        }
+    </style>
 </head>
 <body>
-    <flowise-fullchatbot></flowise-fullchatbot>
+    <div id="login-container">
+        <h2>Inicia sesión para acceder al chatbot</h2>
+        <form id="credentials-form">
+            <input type="text" id="username" placeholder="Usuario" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="submit">Iniciar sesión</button>
+        </form>
+    </div>
+
+    <div id="chatbot-container" style="display: none;"></div>
+
     <script type="module">
         import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
-        Chatbot.initFull({
-            chatflowid: "c0a91228-db22-48c8-a3f6-433e9f9c62e1",
-            apiHost: "https://flowiseai-railway-production-19bf.up.railway.app",
-            theme: {
-                chatWindow: {
-                    welcomeMessage: "¡Hola! Este es tu asistente de Smart TMT Daruma, en que puedo ayudarte?",
-                    backgroundColor: "#ffffff",
-                    height: 700,
-                    width: 400,
-                    fontSize: 16,
-                    poweredByTextColor: "#303235",
-                    botMessage: {
-                        backgroundColor: "#f7f8ff",
-                        textColor: "#303235",
-                        showAvatar: true,
-                        avatarSrc: "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png",
-                    },
-                    userMessage: {
-                        backgroundColor: "#3B81F6",
-                        textColor: "#ffffff",
-                        showAvatar: true,
-                        avatarSrc: "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
-                    },
-                    textInput: {
-                        placeholder: "Escribe tu pregunta",
-                        backgroundColor: "#ffffff",
-                        textColor: "#303235",
-                        sendButtonColor: "#3B81F6",
-                    }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Manejar el envío del formulario de credenciales
+            document.getElementById("credentials-form").addEventListener("submit", function(event) {
+                event.preventDefault();
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+
+                // Verificar si se han ingresado credenciales
+                if (username && password) {
+                    // Inicializar el chatbot con las credenciales proporcionadas
+                    initializeChatbot(username, password);
+                } else {
+                    alert("Por favor, ingresa tu nombre de usuario y contraseña.");
                 }
-            }
+            });
         });
+
+        // Función para inicializar el chatbot con las credenciales proporcionadas
+        function initializeChatbot(username, password) {
+            Chatbot.initFull({
+                chatflowid: "c0a91228-db22-48c8-a3f6-433e9f9c62e1",
+                apiHost: "https://flowiseai-railway-production-19bf.up.railway.app",
+                theme: {
+                    // Configuración de tema del chatbot
+                },
+                username: username,
+                password: password
+            });
+
+            // Ocultar el formulario de inicio de sesión y mostrar el contenedor del chatbot
+            document.getElementById("login-container").style.display = "none";
+            document.getElementById("chatbot-container").style.display = "block";
+        }
     </script>
 </body>
 </html>
