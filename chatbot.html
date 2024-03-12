@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot de Flowise</title>
+</head>
+
+<body>
+    <flowise-fullchatbot></flowise-fullchatbot>
+    <script type="module">
+        
+        const auth = localStorage.getItem('auth')
+        if(auth === null || auth === undefined || auth !== 'ok'){
+            window.location.href = 'index.html';
+        }
+
+        import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+        Chatbot.initFull({
+            chatflowid: "eda92429-6fa7-4cb5-9bb0-eca052a62e85",
+            apiHost: "http://192.168.3.95:3000",
+            theme: {
+                chatWindow: {
+                    welcomeMessage: "¡Hola! Este es el asistente de Smart TMT para Daruma preguntame sobre cualquier procedimiento que requieras",
+                    backgroundColor: "#ffffff",
+                    height: 700,
+                    width: 400,
+                    fontSize: 16,
+                    poweredByTextColor: "#303235",
+                    botMessage: {
+                        backgroundColor: "#f7f8ff",
+                        textColor: "#303235",
+                        showAvatar: true,
+                        avatarSrc: "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png",
+                    },
+                    userMessage: {
+                        backgroundColor: "#3B81F6",
+                        textColor: "#ffffff",
+                        showAvatar: true,
+                        avatarSrc: "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
+                    },
+                    textInput: {
+                        placeholder: "Escribe tu pregunta",
+                        backgroundColor: "#ffffff",
+                        textColor: "#303235",
+                        sendButtonColor: "#3B81F6",
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
